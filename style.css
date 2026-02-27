@@ -1,48 +1,125 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f8;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-.container {
-    width: 600px;
-    margin: 50px auto;
-    padding: 25px;
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 500px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 h1 {
     text-align: center;
+    margin-bottom: 25px;
+    color: #333;
 }
 
-textarea, input, select {
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+    color: #555;
+}
+
+textarea,
+input,
+select {
     width: 100%;
-    padding: 8px;
-    margin: 10px 0;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+textarea {
+    resize: none;
+    height: 90px;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+    border-color: #4e73df;
+    outline: none;
+    box-shadow: 0 0 5px rgba(78, 115, 223, 0.3);
 }
 
 button {
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
+    padding: 12px;
+    background: #4e73df;
     color: white;
     border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background: #2e59d9;
 }
 
 .results {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #e9f5ff;
-    border-radius: 5px;
+    margin-top: 25px;
+    padding: 15px;
+    background: #f8f9fc;
+    border-radius: 8px;
 }
 
-.error {
-    color: red;
-    margin-top: 10px;
+.result-item {
+    margin-bottom: 12px;
+}
+
+.result-item p {
+    background: #e3e6f0;
+    padding: 8px;
+    border-radius: 5px;
+    word-break: break-word;
+}
+
+.error-box {
+    margin-top: 20px;
+    padding: 10px;
+    background: #ffe5e5;
+    color: #b30000;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

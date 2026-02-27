@@ -7,36 +7,51 @@
 </head>
 <body>
 
-<div class="container">
-    <h1>Vigenère šifravimo sistema</h1>
+<div class="wrapper">
+    <div class="card">
+        <h1>Vigenère šifravimo sistema</h1>
 
-    <form method="post">
-        <label>Tekstas:</label>
-        <textarea name="text" required></textarea>
+        <form method="post" class="form">
+            <div class="form-group">
+                <label>Tekstas</label>
+                <textarea name="text" placeholder="Įveskite tekstą..." required></textarea>
+            </div>
 
-        <label>Raktas:</label>
-        <input type="text" name="key" required>
+            <div class="form-group">
+                <label>Raktas</label>
+                <input type="text" name="key" placeholder="Įveskite raktą..." required>
+            </div>
 
-        <label>Režimas:</label>
-        <select name="mode">
-            <option value="basic">Pagrindinis (tik raidės)</option>
-            <option value="ascii">Išplėstinis ASCII</option>
-        </select>
+            <div class="form-group">
+                <label>Režimas</label>
+                <select name="mode">
+                    <option value="basic">Pagrindinis (tik raidės)</option>
+                    <option value="ascii">Išplėstinis ASCII</option>
+                </select>
+            </div>
 
-        <button type="submit">Vykdyti</button>
-    </form>
+            <button type="submit">Vykdyti</button>
+        </form>
 
-    <?php if (!empty($error)): ?>
-    <p class="error"><?php echo $error; ?></p>
-    <?php endif; ?>
+        <?php if (!empty($error)): ?>
+        <div class="error-box">
+            <?php echo $error; ?>
+        </div>
+        <?php endif; ?>
 
-    <?php if (!empty($encrypted)): ?>
-    <div class="results">
-        <p><strong>Užšifruotas:</strong> <?php echo htmlspecialchars($encrypted); ?></p>
-        <p><strong>Dešifruotas:</strong> <?php echo htmlspecialchars($decrypted); ?></p>
+        <?php if (!empty($encrypted)): ?>
+        <div class="results">
+            <div class="result-item">
+                <strong>Užšifruotas tekstas:</strong>
+                <p><?php echo htmlspecialchars($encrypted); ?></p>
+            </div>
+            <div class="result-item">
+                <strong>Dešifruotas tekstas:</strong>
+                <p><?php echo htmlspecialchars($decrypted); ?></p>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
-    <?php endif; ?>
-
 </div>
 
 </body>
