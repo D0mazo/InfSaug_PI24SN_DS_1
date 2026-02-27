@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <title>Vigenère Šifras</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Vigenère šifravimo sistema</h1>
+
+    <form method="post">
+        <label>Tekstas:</label>
+        <textarea name="text" required></textarea>
+
+        <label>Raktas:</label>
+        <input type="text" name="key" required>
+
+        <label>Režimas:</label>
+        <select name="mode">
+            <option value="basic">Pagrindinis (tik raidės)</option>
+            <option value="ascii">Išplėstinis ASCII</option>
+        </select>
+
+        <button type="submit">Vykdyti</button>
+    </form>
+
+    <?php if (!empty($error)): ?>
+    <p class="error"><?php echo $error; ?></p>
+    <?php endif; ?>
+
+    <?php if (!empty($encrypted)): ?>
+    <div class="results">
+        <p><strong>Užšifruotas:</strong> <?php echo htmlspecialchars($encrypted); ?></p>
+        <p><strong>Dešifruotas:</strong> <?php echo htmlspecialchars($decrypted); ?></p>
+    </div>
+    <?php endif; ?>
+
+</div>
+
+</body>
+</html>
