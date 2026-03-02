@@ -2,94 +2,102 @@
 <html lang="lt">
 <head>
     <meta charset="UTF-8">
-    <title>Vigenère Šifras</title>
+    <title>Vigenère šifravimo sistema</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="card">
+<div class="container">
+
     <h1>Vigenère šifravimo sistema</h1>
 
-    <div class="content-layout">
+    <div class="grid">
 
         <!-- KAIRĖ PUSĖ -->
-        <div class="left-side">
+        <div class="left">
 
-            <form method="post" class="form">
-                <div class="form-group">
-                    <label>Tekstas</label>
-                    <textarea name="text" placeholder="Įveskite tekstą..." required></textarea>
-                </div>
+            <form method="POST">
 
-                <div class="form-group">
-                    <label>Raktas</label>
-                    <input type="text" name="key" placeholder="Įveskite raktą..." required>
-                </div>
+                <label>Tekstas</label>
+                <textarea name="text" required><?php echo isset($text) ? htmlspecialchars($text) : ""; ?></textarea>
 
-                <div class="form-group">
-                    <label>Režimas</label>
-                    <select name="mode">
-                        <option value="basic">Pagrindinis (tik raidės)</option>
-                        <option value="ascii">Išplėstinis ASCII</option>
-                    </select>
-                </div>
+                <label>Raktas</label>
+                <input type="text" name="key" required value="<?php echo isset($key) ? htmlspecialchars($key) : ""; ?>">
+
+                <label>Režimas</label>
+                <select name="mode">
+                    <option value="basic" <?php if(isset($mode) && $mode==="basic") echo "selected"; ?>>
+                    Pagrindinis (tik raidės)
+                    </option>
+                    <option value="ascii" <?php if(isset($mode) && $mode==="ascii") echo "selected"; ?>>
+                    Išplėstinis (ASCII 32–126)
+                    </option>
+                </select>
 
                 <button type="submit">Vykdyti</button>
+
             </form>
 
-            <?php if (!empty($error)): ?>
-            <div class="error-box">
-                <?php echo $error; ?>
-            </div>
+            <?php if(!empty($error)): ?>
+            <div class="error"><?php echo $error; ?></div>
             <?php endif; ?>
 
-            <?php if (!empty($encrypted)): ?>
-            <div class="results">
-                <div class="result-item">
-                    <strong>Užšifruotas tekstas:</strong>
-                    <p><?php echo htmlspecialchars($encrypted); ?></p>
-                </div>
-                <div class="result-item">
-                    <strong>Dešifruotas tekstas:</strong>
-                    <p><?php echo htmlspecialchars($decrypted); ?></p>
-                </div>
+            <?php if(!empty($encrypted)): ?>
+
+            <div class="result">
+                <h3>Užšifruotas tekstas:</h3>
+                <div class="box"><?php echo htmlspecialchars($encrypted); ?></div>
             </div>
+
+            <div class="result">
+                <h3>Dešifruotas tekstas:</h3>
+                <div class="box"><?php echo htmlspecialchars($decrypted); ?></div>
+            </div>
+
             <?php endif; ?>
 
         </div>
 
         <!-- DEŠINĖ PUSĖ -->
-        <?php if (!empty($algorithmSteps)): ?>
-        <div class="right-side">
-            <div class="results">
-                <h3>Algoritmo veikimo lentelė</h3>
-                <table class="algorithm-table">
-                    <tr>
-                        <th>Simbolis</th>
-                        <th>Indeksas</th>
-                        <th>Raktas</th>
-                        <th>Poslinkis</th>
-                        <th>Skaičiavimas</th>
-                        <th>Rezultatas</th>
-                    </tr>
+        <div class="right">
 
-                    <?php foreach ($algorithmSteps as $step): ?>
-                    <tr>
-                        <td><?php echo $step["text_char"]; ?></td>
-                        <td><?php echo $step["text_index"]; ?></td>
-                        <td><?php echo $step["key_char"]; ?></td>
-                        <td><?php echo $step["shift"]; ?></td>
-                        <td><?php echo $step["calculation"]; ?></td>
-                        <td><?php echo $step["result_char"]; ?></td>
-                    </tr>
-                    <?php endforeach; ?>
+            <?php if(!empty($algorithmSteps)): ?>
 
-                </table>
-            </div>
+            <h2>Algoritmo veikimo lentelė</h2>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Simbolis</th>
+                    <th>Indeksas</th>
+                    <th>Raktas</th>
+                    <th>Poslinkis</th>
+                    <th>Skaičiavimas</th>
+                    <th>Rezultatas</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php foreach($algorithmSteps as $step): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($step["symbol"]); ?></td>
+                    <td><?php echo $step["index"]; ?></td>
+                    <td><?php echo htmlspecialchars($step["key"]); ?></td>
+                    <td><?php echo $step["shift"]; ?></td>
+                    <td><?php echo $step["calc"]; ?></td>
+                    <td><?php echo htmlspecialchars($step["result"]); ?></td>
+                </tr>
+                <?php endforeach; ?>
+
+                </tbody>
+            </table>
+
+            <?php endif; ?>
+
         </div>
-        <?php endif; ?>
 
     </div>
+
 </div>
 
 </body>
