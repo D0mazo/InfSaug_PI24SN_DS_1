@@ -105,24 +105,24 @@ function vigenereEncryptASCII($text, $key) {
     for ($i = 0; $i < strlen($text); $i++) {
 
         $char = $text[$i];
-
-        // Tarpas nešifruojamas
-        if ($char === " ") {
-            $result .= " ";
-            continue;
-        }
-
         $charCode = ord($char);
 
+        // Jei simbolis patenka į ASCII intervalą (32–126)
         if ($charCode >= ASCII_START && $charCode <= ASCII_END) {
 
+            // Apskaičiuojame poslinkį
             $shift = ord($key[$keyIndex % strlen($key)]) - ASCII_START;
+
+            // Skaičiuojame naują reikšmę
             $newValue = ($charCode - ASCII_START + $shift) % $range;
 
+            // Konvertuojame atgal į simbolį
             $result .= chr(ASCII_START + $newValue);
+
             $keyIndex++;
 
         } else {
+            // Jei simbolis nepatenka į intervalą – paliekame nepakeistą
             $result .= $char;
         }
     }
@@ -140,20 +140,16 @@ function vigenereDecryptASCII($text, $key) {
     for ($i = 0; $i < strlen($text); $i++) {
 
         $char = $text[$i];
-
-        if ($char === " ") {
-            $result .= " ";
-            continue;
-        }
-
         $charCode = ord($char);
 
         if ($charCode >= ASCII_START && $charCode <= ASCII_END) {
 
             $shift = ord($key[$keyIndex % strlen($key)]) - ASCII_START;
+
             $newValue = ($charCode - ASCII_START - $shift + $range) % $range;
 
             $result .= chr(ASCII_START + $newValue);
+
             $keyIndex++;
 
         } else {
