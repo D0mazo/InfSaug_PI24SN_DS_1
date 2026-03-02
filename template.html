@@ -11,7 +11,6 @@
 
     <h1>Vigenère šifravimo sistema</h1>
 
-
     <div class="grid">
 
         <!-- KAIRĖ PUSĖ -->
@@ -21,15 +20,14 @@
             <div class="instructions">
                 <h3>Naudojimo instrukcija:</h3>
                 <ol>
-                    <li>Įvedate tekstą į lauką tekstas</li>
-                    <li>Įvedate raktą į lauką raktas</li>
-                    <li>Spaudžiate<strong>Užkoduoti</strong> → gaunate encrypted rezultatą</li>
-                    <li>Dešinėje pusėje matote kaip yra atliekami skaičiavimai</li>
-                    <li>Galima nukopijuoti gautąjį rezultatą į lauką testas</li>
-                    <li>SpaudŽiate <strong>Atkoduoti</strong> → gaunate originalų, jūsų įvestą tesktą</li>
+                    <li>Įvedate tekstą į lauką „Tekstas“</li>
+                    <li>Įvedate raktą į lauką „Raktas“</li>
+                    <li>Spaudžiate <strong>Užkoduoti</strong> → gaunate rezultatą</li>
+                    <li>Dešinėje pusėje matote algoritmo skaičiavimus</li>
+                    <li>Galite nukopijuoti rezultatą atgal į lauką</li>
+                    <li>Spaudžiate <strong>Atkoduoti</strong> → gaunate originalų tekstą</li>
                 </ol>
             </div>
-
 
             <form method="POST">
 
@@ -48,6 +46,7 @@
                     Išplėstinis (ASCII 32–126)
                     </option>
                 </select>
+
                 <small>
                     Tarpas ("space") nėra šifruojamas
                 </small>
@@ -81,40 +80,7 @@
 
         <!-- DEŠINĖ PUSĖ -->
         <div class="right">
-
-            <?php if(!empty($algorithmSteps)): ?>
-
-            <h2>Algoritmo veikimo lentelė</h2>
-
-            <table>
-                <thead>
-                <tr>
-                    <th>Simbolis</th>
-                    <th>Indeksas</th>
-                    <th>Raktas</th>
-                    <th>Poslinkis</th>
-                    <th>Skaičiavimas</th>
-                    <th>Rezultatas</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <?php foreach($algorithmSteps as $step): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($step["symbol"]); ?></td>
-                    <td><?php echo $step["index"]; ?></td>
-                    <td><?php echo htmlspecialchars($step["key"]); ?></td>
-                    <td><?php echo $step["shift"]; ?></td>
-                    <td><?php echo $step["calc"]; ?></td>
-                    <td><?php echo htmlspecialchars($step["result"]); ?></td>
-                </tr>
-                <?php endforeach; ?>
-
-                </tbody>
-            </table>
-
-            <?php endif; ?>
-
+            <?php echo $tableHTML ?? ""; ?>
         </div>
 
     </div>
