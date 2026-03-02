@@ -1,75 +1,79 @@
-/* Bendras puslapio fonas */
+/* ===== BODY ===== */
+
 body {
     margin: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #1f2a38, #2f80ed);
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(90deg, #3b82f6, #14b8a6);
 }
 
-/* Pagrindinis konteineris */
+/* ===== MAIN CONTAINER ===== */
+
 .container {
     width: 95%;
     max-width: 1400px;
     margin: 40px auto;
-    background: #ffffff;
-    padding: 35px;
-    border-radius: 14px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    background: #f3f4f6;
+    padding: 30px;
+    border-radius: 12px;
 }
 
-/* Antraštė */
+/* ===== TITLE ===== */
+
 h1 {
     text-align: center;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
     font-weight: 600;
-    color: #1f2a38;
+    color: #1f2937;
 }
 
-/* Grid struktūra */
+/* ===== GRID ===== */
+
 .grid {
     display: grid;
     grid-template-columns: 1fr 1.4fr;
-    gap: 50px;
+    gap: 40px;
 }
 
-/* Label */
+/* ===== FORM ELEMENTS ===== */
+
 label {
     display: block;
     margin-top: 18px;
     font-weight: 600;
-    color: #333;
+    color: #374151;
 }
 
-/* Teksto laukas */
 textarea {
     width: 100%;
     height: 110px;
     padding: 12px;
     margin-top: 6px;
     border-radius: 8px;
-    border: 1px solid #ccc;
-    resize: vertical;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
     font-size: 14px;
 }
 
-/* Input ir select */
 input, select {
     width: 100%;
     padding: 12px;
     margin-top: 6px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
     font-size: 14px;
 }
 
-/* Mygtukas */
+/* ===== BUTTON ===== */
+
 button {
     margin-top: 25px;
     padding: 14px;
     width: 100%;
-    background: #2f80ed;
+    background: #4f6fdc;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 600;
     font-size: 15px;
     cursor: pointer;
@@ -77,76 +81,72 @@ button {
 }
 
 button:hover {
-    background: #1c60c5;
-    transform: translateY(-2px);
+    background: #3f5bd1;
 }
 
-/* Rezultatų blokai */
+/* ===== RESULT BLOCKS ===== */
+
 .result {
     margin-top: 25px;
 }
 
 .box {
-    background: #f4f7fb;
+    background: #e5e7eb;
     padding: 14px;
     border-radius: 8px;
     word-wrap: break-word;
     font-family: monospace;
     font-size: 14px;
-    border: 1px solid #e0e6ed;
 }
 
-/* Klaidos tekstas */
+/* ===== ERROR ===== */
+
 .error {
-    color: #d63031;
+    color: #dc2626;
     margin-top: 15px;
     font-weight: 600;
 }
 
-/* Lentelė */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    font-size: 13px;
-    border-radius: 10px;
-    overflow: hidden;
-}
+/* ===== RIGHT PANEL ===== */
 
-/* Lentelės header */
-th {
-    background: #2f80ed;
-    color: white;
-    padding: 10px;
-    font-weight: 600;
-    text-align: center;
-}
-
-/* Lentelės eilutės */
-td {
-    padding: 8px;
-    text-align: center;
-    border-bottom: 1px solid #e6ecf2;
-}
-
-/* Zebra efektas */
-tr:nth-child(even) {
-    background: #f7f9fc;
-}
-
-/* Scroll zona dešinėje pusėje */
 .right {
     max-height: 650px;
     overflow-y: auto;
     padding-right: 5px;
 }
 
-/* Scrollbar stilius (modern browsers) */
-.right::-webkit-scrollbar {
-    width: 6px;
+/* ===== TABLE ===== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
-.right::-webkit-scrollbar-thumb {
-    background: #2f80ed;
-    border-radius: 10px;
+/* Header */
+
+th {
+    background: #4f6fdc;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Cells */
+
+td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Zebra */
+
+tr:nth-child(even) {
+    background: #f9fafb;
 }
