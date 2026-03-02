@@ -150,3 +150,29 @@ td {
 tr:nth-child(even) {
     background: #f9fafb;
 }
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.button-group button {
+    flex: 1;
+}
+
+.btn-encrypt {
+    background: #4f6fdc;
+}
+
+.btn-encrypt:hover {
+    background: #3f5bd1;
+}
+
+.btn-decrypt {
+    background: #16a34a;
+}
+
+.btn-decrypt:hover {
+    background: #15803d;
+}

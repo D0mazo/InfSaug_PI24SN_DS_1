@@ -34,7 +34,15 @@
                     </option>
                 </select>
 
-                <button type="submit">Vykdyti</button>
+                <div class="button-group">
+                    <button type="submit" name="action" value="encrypt" class="btn-encrypt">
+                        Užkoduoti
+                    </button>
+
+                    <button type="submit" name="action" value="decrypt" class="btn-decrypt">
+                        Atkoduoti
+                    </button>
+                </div>
 
             </form>
 
@@ -42,18 +50,13 @@
             <div class="error"><?php echo $error; ?></div>
             <?php endif; ?>
 
-            <?php if(!empty($encrypted)): ?>
-
+            <?php if(!empty($resultText)): ?>
             <div class="result">
-                <h3>Užšifruotas tekstas:</h3>
-                <div class="box"><?php echo htmlspecialchars($encrypted); ?></div>
+                <h3>Rezultatas:</h3>
+                <div class="box">
+                    <?php echo htmlspecialchars($resultText); ?>
+                </div>
             </div>
-
-            <div class="result">
-                <h3>Dešifruotas tekstas:</h3>
-                <div class="box"><?php echo htmlspecialchars($decrypted); ?></div>
-            </div>
-
             <?php endif; ?>
 
         </div>
