@@ -5,7 +5,7 @@
 1. Pagrindinis režimas (A–Z) – šifruojamos tik abėcėlės raidės (tarpas paliekamas nepakeistas).
 2. Išplėstinis ASCII režimas (32–126) – šifruojami visi ASCII intervalo simboliai (tarpas paliekamas nepakeistas).
 
----
+
 
 # Pagrindinis režimas (A–Z)
 
@@ -24,11 +24,10 @@ Kur:
 
 Kodo vieta:
 
-```php
-$newIndex = ($textIndex + $shift) % 26;
-```
 
----
+$newIndex = ($textIndex + $shift) % 26;
+
+
 
 ## Dešifravimo formulė
 
@@ -36,13 +35,13 @@ P = (C - K) mod 26
 
 Kad išvengtume neigiamų reikšmių:
 
-```php
+
 $newIndex = ($textIndex - $shift + 26) % 26;
-```
+
 
 +26 pridedamas tam, kad rezultatas nebūtų neigiamas prieš atliekant mod operaciją.
 
----
+
 
 # ASCII režimas (32–126)
 
@@ -53,11 +52,11 @@ n = 95
 
 Intervalo dydis apskaičiuojamas taip:
 
-```php
-$range = ASCII_END - ASCII_START + 1;
-```
 
----
+$range = ASCII_END - ASCII_START + 1;
+
+
+
 
 ## Šifravimo formulė (ASCII)
 
@@ -67,9 +66,9 @@ Kadangi intervalas prasideda nuo 32, pirmiausia atliekama normalizacija.
 
 Kodo vieta:
 
-```php
+
 $newValue = ($charCode - ASCII_START + $shift) % $range;
-```
+
 
 
 ## Dešifravimo formulė (ASCII)
@@ -78,9 +77,9 @@ P = (C - 32 - K) mod 95
 
 Kad išvengtume neigiamų reikšmių:
 
-```php
+
 $newValue = ($charCode - ASCII_START - $shift + $range) % $range;
-```
+
 
 +95 pridedamas tam, kad rezultatas nebūtų neigiamas prieš atliekant mod operaciją.
 
@@ -90,15 +89,15 @@ $newValue = ($charCode - ASCII_START - $shift + $range) % $range;
 
 Basic režime:
 
-```php
+
 $shift = array_search($key[$keyIndex % strlen($key)], $ALPHABET);
-```
+
 
 ASCII režime:
 
-```php
+
 $shift = ord($key[$keyIndex % strlen($key)]) - ASCII_START;
-```
+
 
 Čia rakto simbolis paverčiamas į skaitinį poslinkį.
 
