@@ -1,5 +1,7 @@
 <?php
 
+// KONSTANTOS
+
 // Apibrėžiame ASCII intervalo pradžią (tarpas)
 define("ASCII_START", 32);
 
@@ -10,33 +12,36 @@ define("ASCII_END", 126);
 $ALPHABET = range('A', 'Z');
 
 
-// Funkcija rakto validacijai tikrinti
+// RAKTO VALIDACIJA
+
+// Funkcija tikrina ar raktas yra tinkamas pagal pasirinktą režimą
 function validateKey($key, $mode) {
 
     // Jei raktas tuščias – grąžiname false
     if (empty($key)) return false;
 
-    // Jei pasirinktas pagrindinis režimas – raktas turi būti tik iš raidžių
-    if ($mode === "basic") return ctype_alpha($key);
+    // Jei pasirinktas pagrindinis režimas – raktas turi būti tik raidės
+    if ($mode === "basic") {
+        return ctype_alpha($key);
+    }
 
     // ASCII režime leidžiami visi simboliai
     return true;
 }
 
 
-// Pagrindinio režimo (tik raidės) šifravimo funkcija
+// PAGRINDINIS REŽIMAS (A–Z)
+
+// Funkcija šifruoja tekstą naudojant Vigenère algoritmą (tik raidės)
 function vigenereEncryptBasic($text, $key, $ALPHABET) {
 
-    // Tekstą paverčiame didžiosiomis raidėmis
-    $text = strtoupper($text);
-
-    // Raktą taip pat paverčiame didžiosiomis raidėmis
+    // Raktą paverčiame didžiosiomis raidėmis skaičiavimui
     $key = strtoupper($key);
 
-    // Sukuriame tuščią rezultatų kintamąjį
+    // Rezultato kintamasis
     $result = "";
 
-    // Rakto indeksas (naudojamas kartojimui)
+    // Rakto indeksas (naudojamas cikliškam kartojimui)
     $keyIndex = 0;
 
     // Einame per kiekvieną teksto simbolį
@@ -45,23 +50,35 @@ function vigenereEncryptBasic($text, $key, $ALPHABET) {
         // Paimame dabartinį simbolį
         $char = $text[$i];
 
-        // Tikriname ar simbolis yra abėcėlėje
-        if (in_array($char, $ALPHABET)) {
+        // Jei simbolis yra raidė
+        if (ctype_alpha($char)) {
 
-            // Randame rakto raidės poslinkį (indeksą abėcėlėje)
+            // Patikriname ar raidė mažoji
+            $isLower = ctype_lower($char);
+
+            // Konvertuojame į didžiąją skaičiavimui
+            $charUpper = strtoupper($char);
+
+            // Randame teksto raidės indeksą abėcėlėje
+            $textIndex = array_search($charUpper, $ALPHABET);
+
+            // Randame rakto raidės poslinkį
             $shift = array_search($key[$keyIndex % strlen($key)], $ALPHABET);
 
-            // Apskaičiuojame naują indeksą su modulo operacija
-            $newIndex = (array_search($char, $ALPHABET) + $shift) % count($ALPHABET);
+            // Apskaičiuojame naują indeksą su modulo 26
+            $newIndex = ($textIndex + $shift) % 26;
 
-            // Pridedame užšifruotą raidę prie rezultato
-            $result .= $ALPHABET[$newIndex];
+            // Gauname užšifruotą raidę
+            $newChar = $ALPHABET[$newIndex];
+
+            // Išlaikome originalų raidės dydį
+            $result .= $isLower ? strtolower($newChar) : $newChar;
 
             // Pereiname prie kitos rakto raidės
             $keyIndex++;
 
         } else {
-            // Jei simbolis ne raidė – paliekame nepakeistą
+            // Jei simbolis nėra raidė – paliekame nepakeistą
             $result .= $char;
         }
     }
@@ -71,11 +88,8 @@ function vigenereEncryptBasic($text, $key, $ALPHABET) {
 }
 
 
-// Pagrindinio režimo dešifravimo funkcija
+// Funkcija dešifruoja tekstą pagrindiniame režime
 function vigenereDecryptBasic($text, $key, $ALPHABET) {
-
-    // Tekstą paverčiame didžiosiomis raidėmis
-    $text = strtoupper($text);
 
     // Raktą paverčiame didžiosiomis raidėmis
     $key = strtoupper($key);
@@ -92,22 +106,24 @@ function vigenereDecryptBasic($text, $key, $ALPHABET) {
         $char = $text[$i];
 
         // Jei simbolis yra raidė
-        if (in_array($char, $ALPHABET)) {
+        if (ctype_alpha($char)) {
 
-            // Randame rakto raidės indeksą
+            $isLower = ctype_lower($char);
+            $charUpper = strtoupper($char);
+
+            $textIndex = array_search($charUpper, $ALPHABET);
             $shift = array_search($key[$keyIndex % strlen($key)], $ALPHABET);
 
-            // Atliekame atvirkštinį poslinkį (atimame)
-            $newIndex = (array_search($char, $ALPHABET) - $shift + count($ALPHABET)) % count($ALPHABET);
+            // Atliekame atvirkštinį poslinkį
+            $newIndex = ($textIndex - $shift + 26) % 26;
 
-            // Pridedame iššifruotą raidę
-            $result .= $ALPHABET[$newIndex];
+            $newChar = $ALPHABET[$newIndex];
 
-            // Pereiname prie kitos rakto raidės
+            $result .= $isLower ? strtolower($newChar) : $newChar;
+
             $keyIndex++;
 
         } else {
-            // Ne raidės simboliai lieka nepakeisti
             $result .= $char;
         }
     }
@@ -116,36 +132,46 @@ function vigenereDecryptBasic($text, $key, $ALPHABET) {
 }
 
 
-// ASCII režimo šifravimo funkcija
+//  ASCII
+
+// Funkcija šifruoja tekstą naudojant ASCII intervalą (32–126)
 function vigenereEncryptASCII($text, $key) {
 
-    $result = "";          // Rezultato kintamasis
-    $keyIndex = 0;         // Rakto indeksas
-    $range = ASCII_END - ASCII_START + 1;  // ASCII intervalo dydis
+    $result = "";
+    $keyIndex = 0;
 
-    // Einame per tekstą
+    // Apskaičiuojame intervalo dydį
+    $range = ASCII_END - ASCII_START + 1;
+
     for ($i = 0; $i < strlen($text); $i++) {
 
-        // Gauname simbolio ASCII kodą
-        $charCode = ord($text[$i]);
+        $char = $text[$i];
 
-        // Tikriname ar simbolis patenka į leidžiamą intervalą
+        // Tarpas paliekamas nepakeistas
+        if ($char === " ") {
+            $result .= " ";
+            continue;
+        }
+
+        // Gauname simbolio ASCII kodą
+        $charCode = ord($char);
+
+        // Jei simbolis patenka į intervalą
         if ($charCode >= ASCII_START && $charCode <= ASCII_END) {
 
-            // Gauname rakto simbolio ASCII kodą
-            $shift = ord($key[$keyIndex % strlen($key)]);
+            // Apskaičiuojame poslinkį
+            $shift = ord($key[$keyIndex % strlen($key)]) - ASCII_START;
 
-            // Skaičiuojame naują simbolį su modulo operacija
-            $newChar = chr(ASCII_START + (($charCode - ASCII_START + $shift) % $range));
+            // Nauja reikšmė su modulo
+            $newValue = ($charCode - ASCII_START + $shift) % $range;
 
-            // Pridedame prie rezultato
-            $result .= $newChar;
+            // Konvertuojame atgal į simbolį
+            $result .= chr(ASCII_START + $newValue);
 
             $keyIndex++;
 
         } else {
-            // Jei nepatenka į intervalą – paliekame nepakeistą
-            $result .= $text[$i];
+            $result .= $char;
         }
     }
 
@@ -153,7 +179,7 @@ function vigenereEncryptASCII($text, $key) {
 }
 
 
-// ASCII režimo dešifravimo funkcija
+// Funkcija dešifruoja ASCII režime
 function vigenereDecryptASCII($text, $key) {
 
     $result = "";
@@ -162,21 +188,28 @@ function vigenereDecryptASCII($text, $key) {
 
     for ($i = 0; $i < strlen($text); $i++) {
 
-        $charCode = ord($text[$i]);
+        $char = $text[$i];
+
+        if ($char === " ") {
+            $result .= " ";
+            continue;
+        }
+
+        $charCode = ord($char);
 
         if ($charCode >= ASCII_START && $charCode <= ASCII_END) {
 
-            $shift = ord($key[$keyIndex % strlen($key)]);
+            $shift = ord($key[$keyIndex % strlen($key)]) - ASCII_START;
 
-            // Atliekame atvirkštinį poslinkį
-            $newChar = chr(ASCII_START + (($charCode - ASCII_START - $shift + $range) % $range));
+            // Atvirkštinis poslinkis
+            $newValue = ($charCode - ASCII_START - $shift + $range) % $range;
 
-            $result .= $newChar;
+            $result .= chr(ASCII_START + $newValue);
 
             $keyIndex++;
 
         } else {
-            $result .= $text[$i];
+            $result .= $char;
         }
     }
 
@@ -184,48 +217,55 @@ function vigenereDecryptASCII($text, $key) {
 }
 
 
-// Inicializuojame rezultatų kintamuosius
-$encrypted = "";
-$decrypted = "";
+// VYKDYMO DALIS
+
+// Rezultato kintamasis
+$resultText = "";
+
+// Klaidos kintamasis
 $error = "";
 
-
-// Tikriname ar forma buvo pateikta (POST metodas)
+// Jei forma pateikta POST metodu
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Gauname vartotojo įvestą tekstą
-    $text = $_POST["text"];
+    $text = trim($_POST["text"]);
 
-    // Gauname vartotojo įvestą raktą
-    $key = $_POST["key"];
+    // Gauname raktą
+    $key = trim($_POST["key"]);
 
-    // Gauname pasirinktą režimą
+    // Gauname režimą
     $mode = $_POST["mode"];
 
-    // Patikriname ar raktas teisingas
+    // Gauname pasirinktą veiksmą
+    $action = $_POST["action"];
+
+    // Tikriname raktą
     if (!validateKey($key, $mode)) {
 
         $error = "Basic režime raktas turi būti tik iš raidžių!";
 
     } else {
 
-        // Jei pasirinktas pagrindinis režimas
+        // Jei pagrindinis režimas
         if ($mode === "basic") {
 
-            $encrypted = vigenereEncryptBasic($text, $key, $ALPHABET);
-
-            $decrypted = vigenereDecryptBasic($encrypted, $key, $ALPHABET);
+            if ($action === "encrypt") {
+                $resultText = vigenereEncryptBasic($text, $key, $ALPHABET);
+            } else {
+                $resultText = vigenereDecryptBasic($text, $key, $ALPHABET);
+            }
 
         } else {
 
-            // Jei pasirinktas ASCII režimas
-            $encrypted = vigenereEncryptASCII($text, $key);
-
-            $decrypted = vigenereDecryptASCII($encrypted, $key);
+            if ($action === "encrypt") {
+                $resultText = vigenereEncryptASCII($text, $key);
+            } else {
+                $resultText = vigenereDecryptASCII($text, $key);
+            }
         }
     }
 }
-
 
 // Įkeliame HTML šabloną
 include "template.html";

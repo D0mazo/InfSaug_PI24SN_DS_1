@@ -1,125 +1,178 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-}
+/* ===== BODY ===== */
 
 body {
-    height: 100vh;
-    background: linear-gradient(135deg, #4e73df, #1cc88a);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(90deg, #3b82f6, #14b8a6);
 }
 
-.wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+/* ===== MAIN CONTAINER ===== */
 
-.card {
-    background: white;
-    width: 500px;
+.container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 40px auto;
+    background: #f3f4f6;
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.5s ease-in-out;
 }
+
+/* ===== TITLE ===== */
 
 h1 {
     text-align: center;
-    margin-bottom: 25px;
-    color: #333;
+    margin-bottom: 30px;
+    font-weight: 600;
+    color: #1f2937;
 }
 
-.form-group {
-    margin-bottom: 18px;
+/* ===== GRID ===== */
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 40px;
 }
+
+/* ===== FORM ELEMENTS ===== */
 
 label {
-    font-weight: 600;
-    margin-bottom: 6px;
     display: block;
-    color: #555;
-}
-
-textarea,
-input,
-select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    transition: 0.3s;
+    margin-top: 18px;
+    font-weight: 600;
+    color: #374151;
 }
 
 textarea {
-    resize: none;
-    height: 90px;
+    width: 100%;
+    height: 110px;
+    padding: 12px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    font-size: 14px;
 }
 
-textarea:focus,
-input:focus,
-select:focus {
-    border-color: #4e73df;
-    outline: none;
-    box-shadow: 0 0 5px rgba(78, 115, 223, 0.3);
-}
-
-button {
+input, select {
     width: 100%;
     padding: 12px;
-    background: #4e73df;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    font-size: 14px;
+}
+
+/* ===== BUTTON ===== */
+
+button {
+    margin-top: 25px;
+    padding: 14px;
+    width: 100%;
+    background: #4f6fdc;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 10px;
+    font-weight: 600;
     font-size: 15px;
-    font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.2s ease;
 }
 
 button:hover {
-    background: #2e59d9;
+    background: #3f5bd1;
 }
 
-.results {
+/* ===== RESULT BLOCKS ===== */
+
+.result {
     margin-top: 25px;
-    padding: 15px;
-    background: #f8f9fc;
+}
+
+.box {
+    background: #e5e7eb;
+    padding: 14px;
     border-radius: 8px;
+    word-wrap: break-word;
+    font-family: monospace;
+    font-size: 14px;
 }
 
-.result-item {
-    margin-bottom: 12px;
+/* ===== ERROR ===== */
+
+.error {
+    color: #dc2626;
+    margin-top: 15px;
+    font-weight: 600;
 }
 
-.result-item p {
-    background: #e3e6f0;
-    padding: 8px;
-    border-radius: 5px;
-    word-break: break-word;
+/* ===== RIGHT PANEL ===== */
+
+.right {
+    max-height: 650px;
+    overflow-y: auto;
+    padding-right: 5px;
 }
 
-.error-box {
-    margin-top: 20px;
+/* ===== TABLE ===== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Header */
+
+th {
+    background: #4f6fdc;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Cells */
+
+td {
     padding: 10px;
-    background: #ffe5e5;
-    color: #b30000;
-    border-radius: 6px;
-    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Zebra */
+
+tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.button-group button {
+    flex: 1;
+}
+
+.btn-encrypt {
+    background: #4f6fdc;
+}
+
+.btn-encrypt:hover {
+    background: #3f5bd1;
+}
+
+.btn-decrypt {
+    background: #16a34a;
+}
+
+.btn-decrypt:hover {
+    background: #15803d;
 }
