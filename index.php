@@ -1,6 +1,6 @@
 <?php
 
-// ================== CONSTANTS ==================
+
 
 define("ASCII_START", 32);
 define("ASCII_END", 126);
@@ -8,7 +8,6 @@ define("ASCII_END", 126);
 $ALPHABET = range('A', 'Z');
 
 
-// ================== KEY VALIDATION ==================
 
 function validateKey($key, $mode) {
     if (empty($key)) return false;
@@ -17,7 +16,6 @@ function validateKey($key, $mode) {
 }
 
 
-// ================== BASIC MODE ==================
 
 function vigenereBasic($text, $key, $encrypt = true) {
 
@@ -74,7 +72,7 @@ function vigenereBasic($text, $key, $encrypt = true) {
 }
 
 
-// ================== ASCII MODE ==================
+
 
 function vigenereASCII($text, $key, $encrypt = true) {
 
@@ -130,7 +128,7 @@ function vigenereASCII($text, $key, $encrypt = true) {
 }
 
 
-// ================== TABLE GENERATOR ==================
+
 
 function generateAlgorithmTable($steps) {
 
@@ -166,7 +164,7 @@ function generateAlgorithmTable($steps) {
 }
 
 
-// ================== EXECUTION ==================
+
 
 $resultText = "";
 $tableHTML = "";
